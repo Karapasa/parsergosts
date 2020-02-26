@@ -34,7 +34,7 @@ def dump_json(result, start_url):
     file_name = get_url_id(start_url) + '.json'
     with open(file_name, 'w', encoding ='utf-8') as file:
         try:
-            jsonfile = json.dump(result,file, indent=4)
+            jsonfile = json.dump(result,file, ensure_ascii=False, indent=4)
             print('Данные сохранены в файле {}'.format(file_name))
         except:
             print('Не удалось сохранить данные!')
@@ -55,7 +55,7 @@ def parsing(set_urls):
     for url in set_urls:
         if url not in visited_urls:
             html = get_page(url)
-            time.sleep(1)
+            time.sleep(0.4)
             soup = BeautifulSoup(html, 'html.parser')
             if soup.find('table', class_='ListGost'):
                 result[start_url][soup.title.string] = {'parents': get_parents(soup, url), 'gosts': parsing_all_tables(soup, url)}
